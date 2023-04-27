@@ -5,30 +5,33 @@ $(function () {
   let stringContent = '';
   let idDic = {};
 
-  function appendContent (newText, newId) {
+  function appendContent (newText) {
     // Append content to @h4 field
     // @newText: checkbox @data-name content
     // @newId: checkbox @data-id content
 
-    if (stringContent === '') {
+    if (stringContent.length < 1) {
       stringContent = newText;
+      return stringContent;
+
     } else {
-      stringContent = stringContent + ', ' + newText;
+      newText = ', ' + newText;
+      stringContent = stringContent + newText;
+      return stringContent;
     }
 
-    idDic[newText] = newId;
-
-    return stringContent;
   }
 
-  function removeContent (oldText) {
+  function removeContent(oldText) {
     // remove content from @h4 tag
     // @oldText: checkbox @data-name content
-      if (stringContent.length === oldText.length) {
-          stringContent = ''
-      } else {
-          stringContent = stringContent.replace(', ' + oldText, '');
-      }
+
+
+    if (stringContent.search(', ' + oldText) === -1) {
+      stringContent = stringContent.replace(oldText, '');
+    } else {
+      stringContent = stringContent.replace(', ' + oldText, '');
+    }
 
     return stringContent;
   }
@@ -40,7 +43,8 @@ $(function () {
     const eventId = $(this).data('id');
 
     if (this.checked === true) {
-      fourAmenities.text(appendContent(eventText, eventId));
+      fourAmenities.text(appendContent(eventText));
+      idDic[eventText] = eventId;
     } else {
       fourAmenities.text(removeContent(eventText));
       idDic[eventText] = null;
