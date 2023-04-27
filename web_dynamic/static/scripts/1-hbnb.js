@@ -49,7 +49,5 @@ $(function () {
       fourAmenities.text(removeContent(eventText));
       idDic[eventText] = null;
     }
-
-    console.log(idDic);
   });
 });
